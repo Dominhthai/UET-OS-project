@@ -38,7 +38,7 @@ class ClientHandler implements Runnable {
     }
 
     @Override
-    //Handle the msg from clients
+    //Handdle the msg from clients
     //send msg to certain client
     public void run() {
         String msgFromClient;
@@ -47,7 +47,7 @@ class ClientHandler implements Runnable {
               try {
             msgFromClient  = br.readLine();
             broadcastMsgClient(msgFromClient);
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             removeClientHandler();
             closeEverything(socket, br, bw);
             break;
@@ -68,7 +68,7 @@ class ClientHandler implements Runnable {
                         clientHandlers.bw.newLine();
                         clientHandlers.bw.flush();
                 }
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 closeEverything(socket, br, bw);
             }
         }
@@ -93,7 +93,7 @@ class ClientHandler implements Runnable {
                         clientHandlers.bw.flush();
                         is_exist ++;
                 }
-                //Remove one client if requested					
+                //Server Remove one client if requested					
         	else if(arrayMsg[1].toLowerCase().equals("server")||
         		arrayMsg[2].toLowerCase().equals("quit"))
         	{

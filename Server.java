@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
 
@@ -15,8 +17,17 @@ public class Server {
 
             while (true) {
                 socket = serverSocket.accept();//Since now, var socket is the server socket
-                Thread multicli = new Thread(new ClientHandler(socket)); // create a new stream for each client connection, associated with 1 only server port
+                Thread multicli = new Thread(new ClientHandler(socket)); // create a new stream for each client connection, associated with 1 only server port.
+                /*
+                Note:   multicli is the server thread(created by server)
+                	new ClientHandler(socket) is the client thread
+                */
                 multicli.start();
+                multicli.interrupt();
+              //ExecutorService executor = Executors.newSingleThreadExecutor();/*Create a Thread Pool,in this example,we have just one single thread in it*/
+                						              
+               // ClientHandler cli_handler = new ClientHandler(socket);// Create a new client thread
+                //executor.execute(cli_handler);//Bind the above client thread into an empty thread of Thread Pool
                 /* 
                 // Establish input and output streams
                 InputStream is = socket.getInputStream();

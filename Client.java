@@ -46,7 +46,7 @@ public class Client {
         }
     }
 
-    /*Listen for msg sent back from its own ClientHandler thread*/
+    /*Listen for msg sent back from a ClientHandler thread*/
     public void msgListener () {
         new Thread(new Runnable() { 
             @Override
